@@ -1,18 +1,19 @@
 <template>
-    <div>
+    <div class="search-field col-md-4 pl-0">
         <!-- :state="searchState" -->
         <b-form-input
+            class="form-control"
             v-model="searchValue"
             type="search"
             placeholder="Search countries"
             aria-describedby="input-live-help input-live-feedback"
             trim
         ></b-form-input>
-        <b-button @click="search">Search</b-button>
+        <!-- <b-button @click="search">Search</b-button> -->
         <b-form-invalid-feedback id="input-live-feedback">
             Enter at least 3 letters
         </b-form-invalid-feedback>
-        <b-form-text id="input-live-help">Your full name.</b-form-text>
+        <!-- <b-form-text id="input-live-help">Country name.</b-form-text> -->
     </div>
 </template>
 

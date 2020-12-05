@@ -1,6 +1,11 @@
 <template>
     <div>
-        here goes the view-switcher
+        <!-- TODO icon based on state (opposite of selected) -->
+        <button class="btn btn-sm btn-outline-secondary" @click="toggleView">
+            <b-icon icon="bar-chart-line-fill"></b-icon>
+            /
+            <b-icon icon="table"></b-icon>
+        </button>
     </div>
 </template>
 
@@ -13,7 +18,13 @@ export default Vue.extend({
             activeView: ''
         };
     },
-    methods: {},
+    methods: {
+        toggleView(): void {
+            // this.$store.commit('toggleView'); << directly commiting mutation ??
+            this.$store.dispatch('toggleView');
+            console.log('<VIEW SWITCH> active view: ', this.$store.state.view);
+        }
+    },
     computed: {}
 });
 </script>

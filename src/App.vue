@@ -1,23 +1,27 @@
 <template>
     <div id="app">
-        <header>
-            <div class="topbar"></div>
-            <div class="hero">
-                <img alt="Vue logo" src="./assets/logo.png" />
-            </div>
+        <header class="header">
+            <div class="topbar bg-dark"></div>
         </header>
-        <main>
-            <Search />
-            <ViewSwitch />
+        <main class="container">
+            <div class="jumbo d-flex justify-content-strech align-items-center p-4">
+                <h2 class="col-md-6 display-4">Hero text</h2>
+                <img class="col-md-4" alt="Vue logo" src="./assets/logo.png" />
+            </div>
+            <div class="d-flex justify-content-between align-items-center py-4">
+                <Search />
+                <ViewSwitch />
+            </div>
             <Table msg="Welcome to Your Vue.js + TypeScript App" />
             <Chart />
         </main>
-        <footer></footer>
+        <footer class="topbar bg-dark"></footer>
     </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+// import './assets/custom.scss';
 import Search from './components/Search.vue';
 import ViewSwitch from './components/viewSwitch.vue';
 import Table from './components/Table.vue';
@@ -35,6 +39,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+@import './assets/custom.scss';
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -44,15 +49,20 @@ export default Vue.extend({
     min-height: 100vh;
     header {
         .topbar {
-            height: 4rem;
+            height: 3rem;
             width: 100%;
             background-color: aquamarine;
         }
-        .hero {
+    }
+    main {
+        min-height: calc(100vh - 6rem);
+        .jumbo {
+            width: 100%;
+            align-items: center;
         }
     }
     footer {
-        height: 4rem;
+        height: 3rem;
         width: 100%;
         background-color: dodgerblue;
     }
