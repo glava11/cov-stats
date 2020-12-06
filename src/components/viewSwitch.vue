@@ -1,9 +1,12 @@
 <template>
     <div>
         <!-- TODO icon based on state (opposite of selected) -->
-        <button class="btn btn-sm btn-outline-secondary" @click="toggleView">
+        <button
+            class="btn btn-sm btn-outline-secondary d-flex justify-content-around"
+            @click="toggleView"
+        >
             <b-icon icon="bar-chart-line-fill"></b-icon>
-            /
+            <span> / </span>
             <b-icon icon="table"></b-icon>
         </button>
     </div>
@@ -29,4 +32,8 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+button {
+    min-width: 5rem;
+}
+</style>
