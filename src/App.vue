@@ -9,7 +9,7 @@
         </header>
         <main class="container">
             <div class="jumbo d-flex justify-content-strech align-items-center p-4">
-                <h2 class="col-md-6 display-4">Get the latest global COVID19 data</h2>
+                <h1 class="col-md-6 heading">Get the latest global COVID19 data</h1>
                 <img
                     class="col-md-6 py-5"
                     alt="Photo by CDC from Pexels"
@@ -21,18 +21,24 @@
                 <Search />
                 <ViewSwitch />
             </div>
-            <Table />
-            <Chart />
+            <Table v-show="selectedView == 'table'" />
+            <Chart v-show="selectedView == 'chart'" />
         </main>
-        <footer class="topbar bg-dark">
+        <footer class="bg-dark">
             <div class="container d-flex justify-content-between">
-                <div class="text-left text-light mt-3">
-                    Made by Drazen as an assesment task for
+                <div class="text-left text-light mt-3 col-12 col-md-4">
+                    Made with
+                    <a href="https://vuejs.org/">Vue.js </a>
+                    and
+                    <a href="https://vuejs.org/">Bootstrap </a>
+                    by Drazen as an assesment task for
                     <a href="https://www.helu.io/">helu.io</a>
                 </div>
-                <div class="text-left text-light mt-3">
+                <div class="text-left text-light mt-3 col-12 col-md-4">
                     Data collected from
                     <a href="https://covid19api.com/">COVID19 API</a>
+                    sourced from
+                    <a href="https://github.com/CSSEGISandData/COVID-19">Johns Hopkins CSSE</a>
                 </div>
             </div>
         </footer>
@@ -54,17 +60,21 @@ export default Vue.extend({
         Table,
         Chart
     },
+    data() {
+        return {};
+    },
     computed: {
+        selectedView(): string {
+            const selectedView = this.$store.getters.getSelectedView;
+            console.log('<TABLE> getSelectedView: ', selectedView);
+            return selectedView;
+        }
         // ...mapState(['data'])
         // summary() {
         //     return this.$store.state.data;
         // }
     },
-    methods: {
-        // getSummary(): any {
-        //     return mapState;
-        // }
-    },
+    methods: {},
     mounted() {
         this.$store.dispatch('getSummaryData');
     }
@@ -87,16 +97,35 @@ export default Vue.extend({
         }
     }
     main {
-        min-height: calc(100vh - 6rem);
+        min-height: calc(100vh - 8rem);
+        padding-bottom: 1rem;
         .jumbo {
             width: 100%;
-            // align-items: center;
+            .heading {
+                font-size: 3rem;
+            }
         }
     }
     footer {
-        height: 3rem;
+        height: auto;
+        min-height: 5rem;
         width: 100%;
         background-color: dodgerblue;
+    }
+    @media (max-width: 790px) {
+        main {
+            .jumbo {
+                flex-direction: column-reverse;
+                .heading {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+        footer {
+            .container {
+                flex-direction: column;
+            }
+        }
     }
 }
 </style>

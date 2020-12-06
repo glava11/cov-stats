@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import { TimePlugin } from 'bootstrap-vue';
 
 Vue.use(Vuex);
 axios.defaults.baseURL = 'https://api.covid19api.com';
@@ -17,14 +16,19 @@ export default new Vuex.Store({
         //     deaths: Number,
         //     recovered: Number
         // }
+        chartData: [],
         fetchTime: new Date(),
         isLoading: true,
         count: 1
     },
     getters: {
-        getSummaryData: state => {
+        getCountriesData: state => {
             console.log('<GETTER> getSummaryData: ', state.countriesData);
             return state.countriesData;
+        },
+        getChartData: state => {
+            console.log('<GETTER> getChartData: ', state.chartData);
+            return state.chartData;
         },
         getLoadingStatus: state => {
             console.log('<GETTER> getLoadingStatus: ', state.isLoading);
@@ -33,6 +37,10 @@ export default new Vuex.Store({
         getFetchTime: state => {
             console.log('<GETTER> getFetchTime: ', state.fetchTime);
             return state.fetchTime;
+        },
+        getSelectedView: state => {
+            console.log('<GETTER> getSelectedView: ', state.view);
+            return state.view;
         }
     },
     mutations: {
@@ -40,8 +48,11 @@ export default new Vuex.Store({
             state.view = state.view === 'table' ? 'chart' : 'table';
             console.log('<MUTATION> Toggling the View to: ', state.view);
         },
-        setSummaryData(state, data): void {
+        setCountriesData(state, data): void {
             state.countriesData = data;
+        },
+        setChartData(state, data): void {
+            state.chartData = data;
         },
         setLoading(state, status): void {
             state.isLoading = status;
@@ -66,24 +77,45 @@ export default new Vuex.Store({
                 .then(res => {
                     console.log('Here is what I got: ', res);
                     if (res && res.data) {
-                        const countries: Array<any> = res.data.Countries.map((c: any) => {
-                            return {
-                                country: c.Country,
-                                confirmed: c.TotalConfirmed,
-                                deaths: c.TotalDeaths,
-                                recovered: c.TotalRecovered
-                            };
-                        });
+                        // Format countries summary data for table
+                        const countriesData: Array<Record<string, any>> = res.data.Countries.map(
+                            (c: any) => {
+                                return {
+                                    country: c.Country,
+                                    confirmed: c.TotalConfirmed,
+                                    deaths: c.TotalDeaths,
+                                    recovered: c.TotalRecovered
+                                };
+                            }
+                        );
                         const total: Record<string, any> = {
                             country: 'Total',
                             confirmed: res.data.Global.TotalConfirmed,
                             deaths: res.data.Global.TotalDeaths,
                             recovered: res.data.Global.TotalRecovered
                         };
+                        // append total/global to array
+                        countriesData.push(total);
+                        // Format date-time
                         const time = new Date(res.data.Date);
-                        countries.push(total);
-                        // console.log('destructured: ', countries);
-                        context.commit('setSummaryData', countries);
+                        // REDUCE !!! and Format chart data
+                        const countriesReduced = countriesData.slice(0, 25);
+                        const chartData: Record<string, any> = {
+                            labels: [],
+                            confirmed: [],
+                            deaths: [],
+                            recovered: []
+                        };
+                        countriesReduced.map((c: any) => {
+                            chartData.labels.push(c.country);
+                            chartData.confirmed.push(c.confirmed);
+                            chartData.deaths.push(c.deaths);
+                            chartData.recovered.push(c.recovered);
+                        });
+                        // commit to state
+                        console.log('chartData: ', chartData);
+                        context.commit('setCountriesData', countriesData);
+                        context.commit('setChartData', chartData);
                         context.commit('setFetchTime', time);
                         context.commit('setLoading', false);
                     }

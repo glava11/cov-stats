@@ -60,80 +60,30 @@ export default Vue.extend({
                     sortable: true
                 }
             ]
-            // isBusy: this.$store.getters.getLoadingState,
-            // items: this.$store.getters.getSummaryData
-            //     { countryName: 'Austria', activeCases: 50000, deaths: 1000, recoveries: 40000 },
-            //     { countryName: 'Germany', activeCases: 70000, deaths: 1500, recoveries: 11000 },
-            //     { countryName: 'Italy', activeCases: 150000, deaths: 5000, recoveries: 23000 },
-            //     { countryName: 'Swizerland', activeCases: 40000, deaths: 750, recoveries: 50000 },
-            //     { countryName: 'Slovenia', activeCases: 30000, deaths: 500, recoveries: 20000 },
-            //     { countryName: 'Hungary', activeCases: 45000, deaths: 1200, recoveries: 30000 }
-            // ]
         };
     },
-    methods: {
-        init() {
-            // this.items = this.$store.getters.getSummaryData;
-            // this.isBusy = this.$store.getters.getLoadingState;
-        }
-        // toggleBusy() {
-        //     this.isBusy = !this.isBusy;
-        // },
-        // async getSummary() {
-        //     // return this.$store.state.data;
-        //     const data = await this.$store.getters.getSummaryData;
-        //     data.then((data: any) => {
-        //         this.items = data;
-        //     });
-        // }
-    },
+    methods: {},
     computed: {
         isBusy(): boolean {
             const loadingState = this.$store.getters.getLoadingStatus;
             console.log('<TABLE> getLoadingState: ', loadingState);
             return loadingState;
         },
-        // getSummary() {
-        //     // return this.$store.state.data;
-        //     this.$store.getters.getSummaryData.then((data: any) => {
-        //         return (this.items = data);
-        //     });
-        // }
         items(): Array<Record<string, any>> {
-            // return this.$store.getters.getSummaryData.then((data: any) => {
-            //     });
-            const data = this.$store.getters.getSummaryData;
+            const data = this.$store.getters.getCountriesData;
             return data;
         },
         fetchTime(): string {
             const time = this.$store.getters.getFetchTime;
             return time;
         }
-        // [...mapState(['data'])];
-        // { countryName: 'Austria', activeCases: 50000, deaths: 1000, recoveries: 40000 },
-        // { countryName: 'Germany', activeCases: 70000, deaths: 1500, recoveries: 11000 },
-        // { countryName: 'Italy', activeCases: 150000, deaths: 5000, recoveries: 23000 },
-        // { countryName: 'Swizerland', activeCases: 40000, deaths: 750, recoveries: 50000 },
-        // { countryName: 'Slovenia', activeCases: 30000, deaths: 500, recoveries: 20000 },
-        // { countryName: 'Hungary', activeCases: 45000, deaths: 1200, recoveries: 30000 }
-        // ...mapState(['data'])
-        // summary() {
-        //     return this.$store.state.data;
-        // }
-    },
-    mounted() {
-        // this.$store.dispatch('getSummaryData');
-        // console.log('<TABLE MOUNTED> getLoadingState: ', this.$store.getters.getLoadingState);
-        // this.init();
     }
 });
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-table {
-    td.table-align-right {
-        text-align: right !important;
-    }
-}
+// table {
+//     td.table-align-right {
+//         text-align: right !important;
+//     }
+// }
 </style>

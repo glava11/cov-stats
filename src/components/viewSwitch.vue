@@ -1,13 +1,9 @@
 <template>
     <div>
-        <!-- TODO icon based on state (opposite of selected) -->
-        <button
-            class="btn btn-sm btn-outline-secondary d-flex justify-content-around"
-            @click="toggleView"
-        >
-            <b-icon icon="bar-chart-line-fill"></b-icon>
-            <span> / </span>
-            <b-icon icon="table"></b-icon>
+        <!-- TODO icon based on state (opposite of selected) d-flex justify-content-around -->
+        <button class="btn btn-outline-secondary " @click="toggleView">
+            <b-icon v-show="selectedView == 'table'" icon="bar-chart-line-fill"></b-icon>
+            <b-icon v-show="selectedView == 'chart'" icon="table"></b-icon>
         </button>
     </div>
 </template>
@@ -28,7 +24,13 @@ export default Vue.extend({
             console.log('<VIEW SWITCH> active view: ', this.$store.state.view);
         }
     },
-    computed: {}
+    computed: {
+        selectedView(): string {
+            const selectedView = this.$store.getters.getSelectedView;
+            console.log('<TABLE> getSelectedView: ', selectedView);
+            return selectedView;
+        }
+    }
 });
 </script>
 

@@ -1,13 +1,13 @@
 <template>
-    <div>
-        here goes the chart
-    </div>
+    <BarChart />
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import BarChart from './BarChart.vue';
 
 export default Vue.extend({
+    components: { BarChart },
     data() {
         return {
             name: 'Chart',
